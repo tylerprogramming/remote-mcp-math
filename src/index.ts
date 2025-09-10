@@ -51,6 +51,35 @@ export class MyMCP extends McpAgent {
 				return { content: [{ type: "text", text: String(result) }] };
 			},
 		);
+
+		// Square root tool
+		this.server.tool("sqrt", { number: z.number() }, async ({ number }) => {
+			if (number < 0) {
+				return {
+					content: [
+						{
+							type: "text",
+							text: "Error: Cannot calculate square root of negative number",
+						},
+					],
+				};
+			}
+			const result = Math.sqrt(number);
+			return { content: [{ type: "text", text: String(result) }] };
+		});
+
+		// Power tool (exponentiation)
+		this.server.tool(
+			"power",
+			{
+				base: z.number(),
+				exponent: z.number(),
+			},
+			async ({ base, exponent }) => {
+				const result = Math.pow(base, exponent);
+				return { content: [{ type: "text", text: String(result) }] };
+			},
+		);
 	}
 }
 
